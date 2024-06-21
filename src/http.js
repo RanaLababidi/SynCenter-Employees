@@ -31,27 +31,3 @@ export async function fetchToken({ password, email }) {
     return responseData;
   }
 }
-export async function loader() {
-  const response = await fetch("https://mibo-backend.r-link.io/admin/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: "admin@gmail.com",
-      password: "123456789",
-    }),
-  });
-
-  if (!response.ok) {
-    throw json(
-      { message: "Could not fetch projects." },
-      {
-        status: 500,
-      }
-    );
-  } else {
-    const resData = await response.json();
-    return resData;
-  }
-}

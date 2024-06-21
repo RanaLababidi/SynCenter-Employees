@@ -18,7 +18,7 @@ import ResetPassword, {
   Action as resetPasswordAction,
 } from "./Pages/Auth/ResetPassword.jsx";
 import SuccessResetPassword from "./Pages/Auth/SuccessResetPassword.jsx";
-import Projects from "./Pages/Projects.jsx";
+import Projects, { loader as projectsloaded } from "./Pages/Projects.jsx";
 import Clients from "./Pages/Clients.jsx";
 import Employees from "./Pages/Auth/Employees.jsx";
 import Statistics from "./Pages/Statistics.jsx";
@@ -26,9 +26,9 @@ import MainNavigation from "./components/MainNavigation.jsx";
 import ProjectDetails, {
   action as deleteProjectAction,
 } from "./Pages/ProjectDetails.jsx";
-
-import { loader as projectsloaded } from "./http.js";
+import Menu from "./components/Menu.jsx";
 import { tokenLoader, checkAuthLoader } from "./util/auth.js";
+
 /*
 function to declare the routers:createBrowserRouter
 path:with route active
@@ -49,7 +49,7 @@ losding text in the ui:useNavighation
 */
 
 const router = createBrowserRouter([
-  { path: "", element: <Home /> },
+  { path: "", element: <Menu /> },
   {
     path: "/auth",
     //errorElement: <ErrorPage />,
@@ -86,7 +86,6 @@ const router = createBrowserRouter([
     loader: checkAuthLoader,
     children: [
       { path: "statistics", element: <Statistics /> },
-
       {
         path: "projects",
         id: "projects",

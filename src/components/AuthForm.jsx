@@ -12,6 +12,7 @@ import {
 import user from "../assets/user.gif";
 import FormComponent from "./FormComponent";
 import ButtonComponent from "./ButtonComponent";
+
 export default function AuthForm() {
   const data = useActionData();
   const navigation = useNavigation();
@@ -42,7 +43,7 @@ export default function AuthForm() {
 
         <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
           <Form className="space-y-6" method="POST">
-            <FormComponent label="Email Adress" id="email" type="email" />
+            <FormComponent label="Email Adress" id="email" type="email" className="text-gray" />
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -72,7 +73,6 @@ export default function AuthForm() {
               </div>
             </div>
                <ButtonComponent label="Sign in" />
-
           </Form>
         </div>
       </div>

@@ -12,7 +12,7 @@ import "../../css/all.css"; // Adjust the path accordingly
 import "@fortawesome/fontawesome-free/css/all.css";
 import Error from "../../components/Error.jsx";
 import AuthFrorm from "../../components/AuthForm.jsx";
-import { fetchToken } from "../../http.js";
+
 function Login() {
   return <AuthFrorm />;
 }
@@ -25,8 +25,7 @@ export async function Action({ request, params }) {
     password: data.get("password"),
   };
 
-
-  const response = await fetch("https://mibo-backend.r-link.io/admin/login", {
+  const response = await fetch("http://127.0.0.1:8000/company/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

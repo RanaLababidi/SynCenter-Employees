@@ -23,7 +23,7 @@ function ProjectDetails() {
   }
 
   return (
-    <>
+    <div className="text-white">
       <h1> ProjectDetails</h1>
       <p>{params.projectId} </p>
 
@@ -35,7 +35,7 @@ function ProjectDetails() {
       <Form>
         <button onClick={startDeleteHandler}>Delete</button>
       </Form>
-    </>
+    </div>
   );
 }
 export default ProjectDetails;

@@ -6,7 +6,10 @@ export default {
       colors: {
         darkBlue: "#050064",
         pistach:"#41e0d1",
-        background:"#bfccd1"
+        background:"#030712",
+        gray:"#111827",
+        lightgray:"#6b7280"
+
       },
       fontFamily: {
         title: ["title", "sans-serif"],

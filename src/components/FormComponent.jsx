@@ -1,9 +1,9 @@
 import React from "react";
 
-function FormComponent({ label, id, type }) {
+export default function FormComponent({ label, id, type }) {
   return (
     <div>
-      <label htmlFor={id} className="font-content block text-sm text-white">
+      <label htmlFor={id} className="  font-content block text-sm text-white">
         {label}
       </label>
       <div className="mt-2">
@@ -19,5 +19,5 @@ function FormComponent({ label, id, type }) {
   );
 }
 
-export default FormComponent;
+
 

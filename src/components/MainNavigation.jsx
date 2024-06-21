@@ -9,23 +9,17 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from '@mui/material/Divider';
-
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Outlet } from "react-router-dom";
-import DataObjectIcon from '@mui/icons-material/DataObject';
-import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
-import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
-import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
-import SwitchAccountOutlinedIcon from '@mui/icons-material/SwitchAccountOutlined';
-import PortraitSharpIcon from '@mui/icons-material/PortraitSharp';
-import AutoGraphOutlinedIcon from '@mui/icons-material/AutoGraphOutlined';
-import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
-import WorkOutlineSharpIcon from '@mui/icons-material/WorkOutlineSharp';
-import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
+import AutoGraphOutlinedIcon from "@mui/icons-material/AutoGraphOutlined";
+import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
+import WorkOutlineSharpIcon from "@mui/icons-material/WorkOutlineSharp";
+import SwitchAccountOutlinedIcon from "@mui/icons-material/SwitchAccountOutlined";
+import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
+import logo from "../assets/Synclogo1.png";
 const drawerWidth = 200;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -34,6 +28,8 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  backgroundColor: theme.palette.background.default, // Set the background color
+  borderRight: "none", // Remove the border
 });
 
 const closedMixin = (theme) => ({
@@ -46,6 +42,8 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
+  backgroundColor: theme.palette.background.default, // Set the background color
+  borderRight: "none", // Remove the border
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -106,13 +104,15 @@ export default function MainNavigation() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{ display: "flex", minHeight: "100vh" }}
+      className=" bg-background "
+    >
       <CssBaseline />
 
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar className="bg-gray">
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -121,30 +121,29 @@ export default function MainNavigation() {
               ...(open && { display: "none" }),
             }}
           >
-            <MenuIcon />
+            <ChevronRightIcon className="w-10 h-10 text-lightgray transition duration-500 ease-in-out transform hover:scale-150  hover:text-white" />
           </IconButton>
-          <div variant="h6" noWrap component="div">
-            search bar here
-          </div>
+          <div variant="h6">search bar here</div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+        <DrawerHeader className="bg-gray ">
+          <img src={logo} className="w-15 h-10 mr-10" />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon className="w-10 h-10 text-lightgray transition duration-500 ease-in-out transform hover:scale-150 hover:text-white" />
             )}
           </IconButton>
           <Divider />
-
         </DrawerHeader>
-        <List>
+
+        <List className="bg-background h-screen">
           {token && (
-            <nav className="pl-6 h-screen ">
+            <nav className="pl-6 h-full ">
               <ul className="flex flex-col h-full space-y-20">
-              <li className="">
+                <li className="">
                   <NavLink
                     to="statistics"
                     Icon={AutoGraphOutlinedIcon}
@@ -154,7 +153,7 @@ export default function MainNavigation() {
                 <li className="">
                   <NavLink
                     to="projects"
-                    Icon={ WorkOutlineSharpIcon}
+                    Icon={WorkOutlineSharpIcon}
                     open={open}
                   />
                 </li>
@@ -172,11 +171,9 @@ export default function MainNavigation() {
                     open={open}
                   />
                 </li>
-                
 
                 <li>
-                  <Logout icon= {LogoutSharpIcon}
-                  open={open} />
+                  <Logout Icon={LogoutSharpIcon} open={open} />
                 </li>
                 {!token && (
                   <li>
@@ -192,105 +189,9 @@ export default function MainNavigation() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Outlet /> {/* Render route content here instead of Typography */}
+
+        <Outlet />
       </Box>
     </Box>
   );
 }
-
-// import { React, useState } from "react";
-// import { Link, Form, useRouteLoaderData } from "react-router-dom";
-// import NavLink from "./NavLink";
-// import MenuIcon from "@mui/icons-material/Menu";
-// import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-
-// function MainNavigation() {
-//   const token = useRouteLoaderData("root");
-//   const [open, setOpen] = useState(false);
-
-//   const handleDrawerOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleDrawerClose = () => {
-//     setOpen(false);
-//   };
-
-//   return (
-//     <div className="flex">
-//       <div
-//         className={`transition-all duration-700 ${
-//           open ? "w-48" : "w-16"
-//         } bg-gray-900 text-white flex-shrink-0    h-screen `}
-//       >
-//         <div
-//           className={`${
-//             !open ? "flex items-center justify-center pr-5" : "hidden"
-//           }`}
-//         >
-//           <button onClick={handleDrawerOpen}>
-//             <MenuIcon />
-//           </button>
-//         </div>
-//         <div>
-//           <button
-//             onClick={handleDrawerClose}
-//             className={` ${!open && "hidden"}`}
-//           >
-//             <ChevronLeftIcon />
-//           </button>
-//         </div>
-//         <div>
-//           {token && (
-//             <nav>
-//               <ul>
-//                 <li>
-//                   <NavLink
-//                     to="projects"
-//                     icon="fa-solid fa-diagram-project"
-//                     open={open}
-//                   />
-//                 </li>
-//                 <li>
-//                   <NavLink
-//                     to="Employees"
-//                     icon="fa-solid fa-users-gear"
-//                     open={open}
-//                   />
-//                 </li>
-//                 <li>
-//                   <NavLink
-//                     to="clients"
-//                     icon="fa-solid fa-users-gear"
-//                     open={open}
-//                   />
-//                 </li>
-//                 <li>
-//                   <NavLink
-//                     to="statistics"
-//                     icon="fa-solid fa-users-gear"
-//                     open={open}
-//                   />
-//                 </li>
-//                 {/* <li>
-//                 <Form action="logout" method="post">
-//                   <button>Log out</button>
-//                 </Form>
-//               </li> */}
-//                 {!token && (
-//                   <li>
-//                     <Form action="/auth">
-//                       <button>Log in</button>
-//                     </Form>
-//                   </li>
-//                 )}
-//               </ul>
-//             </nav>
-//           )}
-//         </div>
-//         <div className="py-3"></div>
-//       </div>
-//     </div>
-//   );
-// }
-// export default MainNavigation;
