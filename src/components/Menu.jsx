@@ -9,12 +9,11 @@ import {
 } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Menu() {
+export default function Menu({ onClientSelect }) { // Add onClientSelect prop
   const [selected, setSelected] = useState(null);
   const [clients, setClients] = useState([]);
   const placeholder = "Select client";
@@ -35,7 +34,7 @@ export default function Menu() {
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await fetch("http://127.0.0.1:8000/company/clients", {
+    const response = await fetch("http://192.168.1.5:8000/company/clients", {
       headers: headers,
     });
 
@@ -47,6 +46,10 @@ export default function Menu() {
     return responseData.clients; // Return parsed JSON data
   };
 
+  useEffect(() => {
+    onClientSelect(selected ? selected.id : null); // Pass selected client ID to parent component
+  }, [selected, onClientSelect]);
+
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
@@ -54,7 +57,7 @@ export default function Menu() {
           <Label className="block text-background mt-3 font-title font-bold">
             Client:
           </Label>
-          <div className="relative mt-2">
+          <div className="relative mt-2 ">
             <ListboxButton
               className="relative cursor-default bg-white pl-3 pr-10 text-left text-gray-900 ring-1 ring-inset ring-gray-300 focus:outline-none form-input mt-1 block w-full border border-background rounded-lg py-1.5 shadow-sm focus:ring-2 focus:ring-inset focus:ring-pistach sm:text-sm sm:leading-6"
               onClick={handleButtonClick}

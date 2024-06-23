@@ -11,7 +11,7 @@ export default function ButtonComponent({ label, onClick }) {
         type="submit"
         disabled={isSubmitting}
         variant="outlined"
-        className="flex space-y-6 w-full justify-center text-center rounded-md bg-gray  px-3 py-1.5  font-content leading-6 text-white  hover:bg-pistach focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        className="flex space-y-6 w-full justify-center text-center rounded-md bg-lightgray  px-3 py-1.5  font-content leading-6 text-white  hover:bg-pistach focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={onClick}
       >
         {isSubmitting ? "Submitting..." : label}

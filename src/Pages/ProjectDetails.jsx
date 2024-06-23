@@ -15,9 +15,7 @@ function ProjectDetails() {
   function startDeleteHandler() {
     const proceed = window.confirm("Are you sure?");
     console.log(proceed);
-    //trigger the action of confirm to submit data
     if (proceed) {
-      //submit({ data object},method)
       submit(null, { method: "DELETE" });
     }
   }
@@ -44,7 +42,7 @@ export async function action({ params, request }) {
   const projectId = params.projectId;
   const  token = getAuthToken();
   const response = await fetch(
-    "https://mibo-backend.r-link.io/admin/user/" + projectId,
+    "http://192.168.1.5:8000/company/projects/" + projectId,
     {
       method: "DELETE",
       headers: {

@@ -49,7 +49,7 @@ losding text in the ui:useNavighation
 */
 
 const router = createBrowserRouter([
-  { path: "", element: <Menu /> },
+  { path: "", element: <Projects /> },
   {
     path: "/auth",
     //errorElement: <ErrorPage />,
@@ -95,7 +95,7 @@ const router = createBrowserRouter([
           {
             path: ":projectId",
             element: <ProjectDetails />,
-            action: deleteProjectAction,
+            
           },
         ],
       },

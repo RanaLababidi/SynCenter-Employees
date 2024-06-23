@@ -8,7 +8,7 @@ export default {
         pistach:"#41e0d1",
         background:"#030712",
         gray:"#111827",
-        lightgray:"#6b7280"
+        lightgray:"#212e49"
 
       },
       fontFamily: {
