@@ -12,26 +12,15 @@ function ProjectDetails() {
   const data = useRouteLoaderData("projects");
   const submit = useSubmit();
 
-  function startDeleteHandler() {
-    const proceed = window.confirm("Are you sure?");
-    console.log(proceed);
-    if (proceed) {
-      submit(null, { method: "DELETE" });
-    }
-  }
 
   return (
     <div className="text-white">
       <h1> ProjectDetails</h1>
       <p>{params.projectId} </p>
-
-      {/* relative path: back passed on the path
-       * relative route: path to the parent declared in the createBrowserRouter()*/}
       <Link to=".." relative="path">
         Back
       </Link>
       <Form>
-        <button onClick={startDeleteHandler}>Delete</button>
       </Form>
     </div>
   );

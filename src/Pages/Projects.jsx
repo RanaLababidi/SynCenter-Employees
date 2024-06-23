@@ -12,15 +12,23 @@ import ButtonComponent from "../components/ButtonComponent";
 import Menu from "../components/Menu";
 import Success from "../components/Success";
 import FormModel from "../components/FormModel";
+import CardButton from "../components/CardButton";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
-import { ConnectedTvOutlined } from "@mui/icons-material";
 import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
-import ReadMoreSharpIcon from '@mui/icons-material/ReadMoreSharp';
+import ReadMoreSharpIcon from "@mui/icons-material/ReadMoreSharp";
+import CloseSharpIcon from "@mui/icons-material/CloseSharp";
+import successGif from "../assets/Animation - 1716113873825 (1).gif";
+import deleteGif from "../assets/delete.gif";
 function Projects() {
   const data = useRouteLoaderData("projects");
   const [showModal, setShowModal] = useState(false);
+  const [showConfirm, setshowConfirm] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+
   const [selectedClientId, setSelectedClientId] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -38,18 +46,10 @@ function Projects() {
   const handleClosSuccess = () => {
     setSuccessMessage(false);
   };
+  const handleCancelDelete = () => {
+    setshowConfirm(false);
+  };
 
-  // const handleSave = async (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("name", name);
-  //   formData.append("description", description);
-  //   formData.append("client_id", selectedClientId);
-  //   formData.append("logo", file);
-  //     const response = await AddProject(formData);
-  //       setShowModal(false);
-  //       setSuccessMessage(true);
-  // };
   const handleSave = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -59,16 +59,8 @@ function Projects() {
     formData.append("logo", file);
     try {
       const response = await AddProject(formData);
-      console.log(showModal)
-      console.log(successMessage)
-      console.log("----------------")
-  
-
       setShowModal(false);
       setSuccessMessage(true);
-      console.log(showModal)
-      console.log(successMessage)
-
     } catch (error) {
       console.error("Error adding project:", error);
       // Handle error (e.g., show error message to user)
@@ -76,18 +68,13 @@ function Projects() {
   };
 
   const handleDelete = async (id) => {
-    const proceed = window.confirm("Are you sure?");
-    if (proceed) {
-      try {
-        const response = await DeleteProject(id);
-        if (response.success) {
-          window.location.reload(); // Refresh the page to show updated projects list
-        } else {
-          console.error("Failed to delete project.");
-        }
-      } catch (error) {
-        console.error("Error deleting project:", error);
-      }
+    console.log(id);
+    try {
+      const response = await DeleteProject(id);
+      setshowConfirm(false);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting project:", error);
     }
   };
   return (
@@ -106,46 +93,60 @@ function Projects() {
           >
             <div className="">
               <Link to={`${project.id}`}>
-                <img
-                  className="w-full h-56 object-cover"
-                  src={project.logo}
-                  alt="green iguana"
-                />
+                <img className="w-full h-56 object-cover" src={project.logo} />
                 <div className="p-4">
-                  <h5 className="text-xl font-semibold mb-2">
-                    {" "}
-                    {project.name}
-                  </h5>
+                  <h5 className="text-xl font-semibold mb-2">{project.name}</h5>
                   <p className="text-gray-600 text-base">
                     Client: {project.client.name}
                   </p>
                 </div>
               </Link>
               <div className="ml-5 mr-5">
-                <button
-                  onClick={() => handleDelete(project.id)}
-                  className=" border text-red-500 border-red-500 text-customRed  hover:bg-red-500 hover:text-white  py-2 px-4 rounded-lg"
-                >
-                  Delete
-                  <DeleteOutlineSharpIcon />
-                </button>
+                <CardButton
+                  onClick={() => {
+                    setSelectedProjectId(project.id);
+                    setshowConfirm(true);
+                  }}
+                  label={"Delete"}
+                  Icon={DeleteOutlineSharpIcon}
+                  color={"red-500"}
+                />
                 <span className="ml-3" />
                 <Link to={`${project.id}`}>
-                <button
-                  onClick={() => handleDelete(project.id)}
-                  className=" border text-pistach border-pistach text-customRed  hover:bg-pistach hover:text-white  py-2 px-4 rounded-lg"
-                >
-                  Details
-                  <ReadMoreSharpIcon />
-                </button>
+                  <CardButton
+                    label={"Details"}
+                    Icon={ReadMoreSharpIcon}
+                    color={"pistach "}
+                  />
                 </Link>
               </div>
             </div>
+            {showConfirm && selectedProjectId && (
+              <Success
+                text={"Are you sure you want to delete this project?"}
+                onClose={handleCancelDelete}
+                Icon={CloseSharpIcon}
+                gif={deleteGif}
+              >
+                <CardButton
+                  label={"Delete"}
+                  onClick={() => handleDelete(selectedProjectId)}
+                  Icon={DeleteOutlineSharpIcon}
+                  color={"red-500"}
+                />
+              </Success>
+            )}
           </div>
         ))}
       </div>
 
-      {successMessage && <Success onClose={handleClosSuccess} />}
+      {successMessage && (
+        <Success
+          text={"Added a new project Successfully ..."}
+          gif={successGif}
+          onClose={handleClosSuccess}
+        />
+      )}
 
       {showModal && (
         <Modal title="New Project" onClose={handleClose} onSave={handleSave}>
@@ -197,15 +198,14 @@ async function AddProject(formData) {
     Authorization: `Bearer ${token}`,
   };
 
-  
-    const response = await fetch("http://192.168.1.5:8000/company/projects", {
-      method: "POST",
-      headers: headers,
-      body: formData,
-    });
-    if (!response.ok) {
-      throw new Error("Could not fetch projects.");
-    }
+  const response = await fetch("http://192.168.1.5:8000/company/projects", {
+    method: "POST",
+    headers: headers,
+    body: formData,
+  });
+  if (!response.ok) {
+    throw new Error("Could not fetch projects.");
+  }
   const responseData = await response.json();
   return responseData;
 }
@@ -217,7 +217,7 @@ export async function loader({ request }) {
     Authorization: `Bearer ${token}`,
   };
   const response = await fetch(
-    "http://192.168.1.5:8000/company/projects?page=1",
+    "http://192.168.1.5:8000/company/projects?sort[id]=desc",
     {
       headers: headers,
     }

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ButtonComponent from "../components/ButtonComponent";
-import FormModel from "../components/FormModel";
-import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 const Modal = ({ title, onClose, onSave, children }) => {
   return (
     <div className="fixed inset-0 ">
@@ -27,7 +25,7 @@ const Modal = ({ title, onClose, onSave, children }) => {
             </div>
           </div>
           <form onSubmit={onSave}>
-            <div className="">{children}</div>
+          <div className="">{children}</div>
           
             <div className="flex justify-between items-center">
               <ButtonComponent label="Creat project" />
