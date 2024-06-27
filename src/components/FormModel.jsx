@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FormModel({ label, id, type,onChange, placeholder }) {
+export default function FormModel({ label, id, type,onChange, placeholder,defaultValue }) {
   return (
     <div>
       <label
@@ -17,6 +17,7 @@ export default function FormModel({ label, id, type,onChange, placeholder }) {
           required
           placeholder={placeholder}
           onChange={onChange}
+          defaultValue={defaultValue} 
           className="form-input mt-1 block w-full border border-background rounded-lg py-1.5 shadow-sm focus:ring-2 focus:ring-inset focus:ring-pistach sm:text-sm sm:leading-6"
         />
       </div>

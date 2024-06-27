@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ButtonComponent from "../components/ButtonComponent";
-const Modal = ({ title, onClose, onSave, children }) => {
+const Modal = ({ title, onClose, onSave, children,labelButton }) => {
   return (
     <div className="fixed inset-0 ">
       <div className="flex items-center justify-center  px-4 pt-4 pb-20 text-center">
@@ -28,7 +28,7 @@ const Modal = ({ title, onClose, onSave, children }) => {
           <div className="">{children}</div>
           
             <div className="flex justify-between items-center">
-              <ButtonComponent label="Creat project" />
+              <ButtonComponent label={labelButton} />
             </div>
           </form>
         </div>

@@ -15,25 +15,22 @@ import FormModel from "../components/FormModel";
 import CardButton from "../components/CardButton";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
-import ReadMoreSharpIcon from "@mui/icons-material/ReadMoreSharp";
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import successGif from "../assets/Animation - 1716113873825 (1).gif";
 import deleteGif from "../assets/delete.gif";
+import {  storeProject } from "../http";
+
 function Projects() {
   const data = useRouteLoaderData("projects");
   const [showModal, setShowModal] = useState(false);
   const [showConfirm, setshowConfirm] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
-
-  const [selectedClientId, setSelectedClientId] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const submit = useSubmit();
-  const params = useParams();
+  const [selectedClientId, setSelectedClientId] = useState(null);
+
 
   const handleOpen = () => {
     setShowModal(true);
@@ -45,38 +42,33 @@ function Projects() {
 
   const handleClosSuccess = () => {
     setSuccessMessage(false);
+    window.location.reload();
   };
-  const handleCancelDelete = () => {
-    setshowConfirm(false);
-  };
-
+ 
   const handleSave = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
     formData.append("client_id", selectedClientId);
-    formData.append("logo", file);
+    formData.append("logo", file);  
     try {
-      const response = await AddProject(formData);
+      const response = await storeProject(formData);
       setShowModal(false);
       setSuccessMessage(true);
+      window.location.reload();
+
     } catch (error) {
       console.error("Error adding project:", error);
-      // Handle error (e.g., show error message to user)
     }
   };
 
-  const handleDelete = async (id) => {
-    console.log(id);
-    try {
-      const response = await DeleteProject(id);
-      setshowConfirm(false);
-      window.location.reload();
-    } catch (error) {
-      console.error("Error deleting project:", error);
-    }
+  const formatDate = (datetime) => {
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const date = new Date(datetime);
+    return date.toLocaleDateString("en-US", options);
   };
+
   return (
     <div className="">
       <div className="flex justify-between items-center">
@@ -91,35 +83,26 @@ function Projects() {
             className="bg-lightgray mt-1 block w-full border-2   rounded-lg py-1.5 shadow-sm focus:ring-2 focus:ring-inset focus:ring-pistach sm:text-sm sm:leading-6 hover:border-pistach"
             key={project.id}
           >
-            <div className="">
-              <Link to={`${project.id}`}>
-                <img className="w-full h-56 object-cover" src={project.logo} />
-                <div className="p-4">
-                  <h5 className="text-xl font-semibold mb-2">{project.name}</h5>
-                  <p className="text-gray-600 text-base">
-                    Client: {project.client.name}
-                  </p>
+            <div className="m-5">
+              <Link to={`${project.id}/info`}>
+                <img className="w-full h-56 object-cover " src={project.logo} />
+                <div className="  ">
+                  <h5 className="text-xl font-bold mb-2 mt">{project.name}</h5>
+                  <div className="flex items-center ">
+                    <img
+                      className="rounded-full h-8 w-8 "
+                      src={project.client.image}
+                      alt="Client"
+                    />
+                    <div className="pl-2">
+                      <p className="text-xl">{project.client.name}</p>
+                      <div className="text- text-xs">
+                        {formatDate(project.created_at)}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Link>
-              <div className="ml-5 mr-5">
-                <CardButton
-                  onClick={() => {
-                    setSelectedProjectId(project.id);
-                    setshowConfirm(true);
-                  }}
-                  label={"Delete"}
-                  Icon={DeleteOutlineSharpIcon}
-                  color={"red-500"}
-                />
-                <span className="ml-3" />
-                <Link to={`${project.id}`}>
-                  <CardButton
-                    label={"Details"}
-                    Icon={ReadMoreSharpIcon}
-                    color={"pistach "}
-                  />
-                </Link>
-              </div>
             </div>
             {showConfirm && selectedProjectId && (
               <Success
@@ -149,7 +132,7 @@ function Projects() {
       )}
 
       {showModal && (
-        <Modal title="New Project" onClose={handleClose} onSave={handleSave}>
+        <Modal title="New Project" onClose={handleClose} onSave={handleSave} labelButton={"Add new project"}>
           <FormModel
             label="project name:"
             id="name"
@@ -206,49 +189,6 @@ async function AddProject(formData) {
   if (!response.ok) {
     throw new Error("Could not fetch projects.");
   }
-  const responseData = await response.json();
-  return responseData;
-}
-
-export async function loader({ request }) {
-  const token = localStorage.getItem("token");
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-  const response = await fetch(
-    "http://192.168.1.5:8000/company/projects?sort[id]=desc",
-    {
-      headers: headers,
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Could not fetch projects.");
-  }
-
-  const responseData = await response.json();
-  console.log(responseData.projects);
-  return responseData.projects; // Return parsed JSON data
-}
-
-async function DeleteProject(id) {
-  const token = localStorage.getItem("token");
-  const response = await fetch(
-    `http://192.168.1.5:8000/company/projects/${id}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Could not delete project.");
-  }
-
   const responseData = await response.json();
   return responseData;
 }

@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react";
-import {
-  Label,
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-  Transition,
-} from "@headlessui/react";
+import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Menu({ onClientSelect }) { // Add onClientSelect prop
+export default function Menu({ onClientSelect, clientName, clientId }) {
   const [selected, setSelected] = useState(null);
   const [clients, setClients] = useState([]);
   const placeholder = "Select client";
@@ -34,44 +27,40 @@ export default function Menu({ onClientSelect }) { // Add onClientSelect prop
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await fetch("http://192.168.1.5:8000/company/clients", {
-      headers: headers,
-    });
+    const response = await fetch("http://192.168.1.5:8000/company/clients", { headers });
 
     if (!response.ok) {
       throw new Error("Could not fetch clients.");
     }
 
-    const responseData = await response.json(); // Parse JSON response
-    return responseData.clients; // Return parsed JSON data
+    const responseData = await response.json();
+    return responseData.clients;
   };
 
   useEffect(() => {
-    onClientSelect(selected ? selected.id : null); // Pass selected client ID to parent component
+    onClientSelect(selected ? selected.id : clientId);
   }, [selected, onClientSelect]);
+
+  useEffect(() => {
+    setSelected(clients.find(client => client.id === clientId) || null);
+  }, [clients, clientId]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
-          <Label className="block text-background mt-3 font-title font-bold">
-            Client:
-          </Label>
-          <div className="relative mt-2 ">
+          <Label className="block text-background mt-3 font-title font-bold">Client:</Label>
+          <div className="relative mt-2">
             <ListboxButton
               className="relative cursor-default bg-white pl-3 pr-10 text-left text-gray-900 ring-1 ring-inset ring-gray-300 focus:outline-none form-input mt-1 block w-full border border-background rounded-lg py-1.5 shadow-sm focus:ring-2 focus:ring-inset focus:ring-pistach sm:text-sm sm:leading-6"
               onClick={handleButtonClick}
             >
               <span className="flex items-center">
                 {selected && selected.avatar && (
-                  <img
-                    src={selected.avatar}
-                    alt=""
-                    className="h-5 w-5 flex-shrink-0 rounded-full"
-                  />
+                  <img src={selected.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
                 )}
                 <span className="ml-3 block truncate">
-                  {selected ? selected.name : placeholder}
+                  {selected ? selected.name : clientName || placeholder}
                 </span>
               </span>
             </ListboxButton>
@@ -86,43 +75,33 @@ export default function Menu({ onClientSelect }) { // Add onClientSelect prop
                 {clients.map((client) => (
                   <ListboxOption
                     key={client.id}
-                    className={({ focus }) =>
+                    className={({ active }) =>
                       classNames(
-                        focus ? "bg-pistach text-white" : "",
-                        !focus ? "text-gray-900" : "",
+                        active ? "bg-pistach text-white" : "",
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
                     }
                     value={client}
                   >
-                    {({ selected, focus }) => (
+                    {({ selected, active }) => (
                       <>
                         <div className="flex items-center">
-                          <img
-                            src={client.image}
-                            alt=""
-                            className="h-5 w-5 flex-shrink-0 rounded-full"
-                          />
-                          <span
-                            className={classNames(
-                              selected ? "font-semibold" : "font-normal",
-                              "ml-3 block truncate"
-                            )}
-                          >
+                          <img src={client.image} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+                          <span className={classNames(selected ? "font-semibold" : "font-normal", "ml-3 block truncate")}>
                             {client.name}
                           </span>
                         </div>
 
-                        {selected ? (
+                        {selected && (
                           <span
                             className={classNames(
-                              focus ? "text-white" : "text-pistach",
+                              active ? "text-white" : "text-pistach",
                               "absolute inset-y-0 right-0 flex items-center pr-4"
                             )}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                           </span>
-                        ) : null}
+                        )}
                       </>
                     )}
                   </ListboxOption>

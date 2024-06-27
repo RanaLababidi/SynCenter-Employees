@@ -14,8 +14,10 @@ export default function NavLink({ to, Icon, open }) {
     <div className="text-white font-title ">
       <div
         className={`${
-          !open ? "flex items-center justify-center pr-3" : "hidden"
-        }`}
+          !open ? "flex items-center justify-center pr-3" : "hidden "
+        } 
+        
+        `}
       >
         <Link to={to}>
           <Icon

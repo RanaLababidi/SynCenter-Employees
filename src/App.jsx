@@ -18,17 +18,18 @@ import ResetPassword, {
   Action as resetPasswordAction,
 } from "./Pages/Auth/ResetPassword.jsx";
 import SuccessResetPassword from "./Pages/Auth/SuccessResetPassword.jsx";
-import Projects, { loader as projectsloaded } from "./Pages/Projects.jsx";
+import Projects from "./Pages/Projects.jsx";
 import Clients from "./Pages/Clients.jsx";
 import Employees from "./Pages/Auth/Employees.jsx";
 import Statistics from "./Pages/Statistics.jsx";
 import MainNavigation from "./components/MainNavigation.jsx";
-import ProjectDetails, {
-  action as deleteProjectAction,
-} from "./Pages/ProjectDetails.jsx";
-import Menu from "./components/Menu.jsx";
+import ProjectNav from "./components/ProjectNav.jsx";
+import ProjectDetailsInfo from "./Pages/ProjectDetails.jsx";
 import { tokenLoader, checkAuthLoader } from "./util/auth.js";
-
+import Info from "./Pages/Info.jsx";
+import Files from "./Pages/Files.jsx";
+import Tasks from "./Pages/Tasks.jsx";
+import { projectsIndex ,projectDetailsLoader} from "./http.js";
 /*
 function to declare the routers:createBrowserRouter
 path:with route active
@@ -49,7 +50,7 @@ losding text in the ui:useNavighation
 */
 
 const router = createBrowserRouter([
-  { path: "", element: <Projects /> },
+  { path: "", element: <ProjectNav /> },
   {
     path: "/auth",
     //errorElement: <ErrorPage />,
@@ -89,13 +90,19 @@ const router = createBrowserRouter([
       {
         path: "projects",
         id: "projects",
-        loader: projectsloaded,
+        loader: projectsIndex,
         children: [
           { path: "", element: <Projects /> },
           {
             path: ":projectId",
-            element: <ProjectDetails />,
-            
+            element: <ProjectNav />,
+            id: "projectsDetails",
+            loader: projectDetailsLoader,
+            children: [
+              { path: "info", element: <ProjectDetailsInfo /> },
+              {path: "tasks", element:<Tasks/>},
+              {path:"files", element:<Files/>}
+            ],
           },
         ],
       },

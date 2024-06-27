@@ -104,10 +104,8 @@ export default function MainNavigation() {
   };
 
   return (
-    <Box
-      sx={{ display: "flex", minHeight: "100vh" }}
-      className=" bg-background "
-    >
+    <div className="bg-background flex min-h-screen">
+
       <CssBaseline />
 
       <AppBar position="fixed" open={open}>
@@ -192,6 +190,6 @@ export default function MainNavigation() {
 
         <Outlet />
       </Box>
-    </Box>
+    </div>
   );
 }
