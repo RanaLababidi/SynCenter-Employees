@@ -29,7 +29,7 @@ import { tokenLoader, checkAuthLoader } from "./util/auth.js";
 import Info from "./Pages/Info.jsx";
 import Files from "./Pages/Files.jsx";
 import Tasks from "./Pages/Tasks.jsx";
-import { projectsIndex ,projectDetailsLoader} from "./http.js";
+import { projectsIndex ,projectDetailsLoader, clientsIndex} from "./http.js";
 /*
 function to declare the routers:createBrowserRouter
 path:with route active
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "clients", element: <Clients /> },
+      { path: "clients", element: <Clients />, id:"clients", loader:clientsIndex },
       { path: "employees", element: <Employees /> },
       {
         path: "logout",

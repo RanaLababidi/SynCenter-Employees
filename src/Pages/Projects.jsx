@@ -7,11 +7,11 @@ import {
   useParams,
 } from "react-router-dom";
 import Title from "../components/Title";
-import Modal from "../Pages/Model";
+import Model from "../Pages/Model"
 import ButtonComponent from "../components/ButtonComponent";
 import Menu from "../components/Menu";
 import Success from "../components/Success";
-import FormModel from "../components/FormModel";
+import FormModelRequired from "../components/FormModelRequired";
 import CardButton from "../components/CardButton";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
@@ -19,6 +19,7 @@ import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import successGif from "../assets/Animation - 1716113873825 (1).gif";
 import deleteGif from "../assets/delete.gif";
 import {  storeProject } from "../http";
+import Avatar from "../components/Avatar";
 
 function Projects() {
   const data = useRouteLoaderData("projects");
@@ -88,19 +89,7 @@ function Projects() {
                 <img className="w-full h-56 object-cover " src={project.logo} />
                 <div className="  ">
                   <h5 className="text-xl font-bold mb-2 mt">{project.name}</h5>
-                  <div className="flex items-center ">
-                    <img
-                      className="rounded-full h-8 w-8 "
-                      src={project.client.image}
-                      alt="Client"
-                    />
-                    <div className="pl-2">
-                      <p className="text-xl">{project.client.name}</p>
-                      <div className="text- text-xs">
-                        {formatDate(project.created_at)}
-                      </div>
-                    </div>
-                  </div>
+               
                 </div>
               </Link>
             </div>
@@ -132,8 +121,8 @@ function Projects() {
       )}
 
       {showModal && (
-        <Modal title="New Project" onClose={handleClose} onSave={handleSave} labelButton={"Add new project"}>
-          <FormModel
+        <Model title="New Project" onClose={handleClose} onSave={handleSave} labelButton={"Add new project"}>
+          <FormModelRequired
             label="project name:"
             id="name"
             type="text"
@@ -141,7 +130,7 @@ function Projects() {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <FormModel
+          <FormModelRequired
             label="description:"
             id="description"
             type="text"
@@ -167,7 +156,7 @@ function Projects() {
               />
             </label>
           </div>
-        </Modal>
+        </Model>
       )}
     </div>
   );

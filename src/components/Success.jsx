@@ -1,6 +1,6 @@
 import React, { Children, useState } from "react";
 import ButtonComponent from "../components/ButtonComponent";
-import FormModel from "../components/FormModel";
+import FormModelRequired from "./FormModelRequired";
 import CardButton from "../components/CardButton";
 
 const Success = ({ text, title, onClose, children, gif,Icon }) => {

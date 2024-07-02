@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FormModel({length, label, id, type,value,onChange,onBlur, placeholder,defaultValue }) {
+export default function FormModelRequired({length, label, id, type,value,onChange,onBlur, placeholder,defaultValue }) {
   return (
     <div>
       <label
@@ -15,6 +15,7 @@ export default function FormModel({length, label, id, type,value,onChange,onBlur
           name={id}
           type={type}
           value={value}
+          required
           placeholder={placeholder}
           onChange={onChange}
           onBlur={onBlur}

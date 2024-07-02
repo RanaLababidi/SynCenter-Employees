@@ -7,9 +7,9 @@ import {
   useNavigate,
   redirect,
 } from "react-router-dom";
-import Modal from "../Pages/Model";
+import Model from "../Pages/Model";
 import CardButton from "../components/CardButton";
-import FormModel from "../components/FormModel";
+import FormModelRequired from "../components/FormModelRequired";
 import Menu from "../components/Menu";
 import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
@@ -19,7 +19,9 @@ import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import deleteGif from "../assets/delete.gif";
 import { deleteProject, updateProject } from "../http";
 import Title from "../components/Title";
+import Avatar from "../components/Avatar";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
+
 function ProjectDetailsInfo() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -96,11 +98,7 @@ function ProjectDetailsInfo() {
           <Title title={data.name} />
           <p className="pb-3">{data.description}</p>
           <div className="flex items-center pb-5 ">
-            <img
-              className="rounded-full h-10 w-10"
-              src={data.client.image}
-              alt="Client"
-            />
+            <Avatar src={data.client.image} />
             <div className="pl-2 ">
               <p className="">{data.client.name}</p>
               <p className=" ">{data.client.email}</p>
@@ -129,7 +127,7 @@ function ProjectDetailsInfo() {
               }}
               label={"Delete"}
               Icon={DeleteOutlineSharpIcon}
-              color={"red-500"}
+              color={"redcolor"}
             />
           </div>
         </div>
@@ -145,8 +143,13 @@ function ProjectDetailsInfo() {
           </Link>
         </div>
         {showModal && (
-          <Modal title="New Project" onClose={handleClose} onSave={handleSave} labelButton={"Update project"}>
-            <FormModel
+          <Model
+            title="Edite Project"
+            onClose={handleClose}
+            onSave={handleSave}
+            labelButton={"Update project"}
+          >
+            <FormModelRequired
               label="project name:"
               id="name"
               type="text"
@@ -154,7 +157,7 @@ function ProjectDetailsInfo() {
               onChange={(e) => setName(e.target.value)}
             />
 
-            <FormModel
+            <FormModelRequired
               label="description:"
               id="description"
               type="text"
@@ -186,7 +189,7 @@ function ProjectDetailsInfo() {
                 />
               </label>
             </div>
-          </Modal>
+          </Model>
         )}
       </div>
 
@@ -201,7 +204,7 @@ function ProjectDetailsInfo() {
             label={"Delete"}
             onClick={() => handleDelete(selectedProjectId)}
             Icon={DeleteOutlineSharpIcon}
-            color={"red-500"}
+            color={"redcolor"}
           />
         </Success>
       )}
