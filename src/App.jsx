@@ -19,17 +19,23 @@ import ResetPassword, {
 } from "./Pages/Auth/ResetPassword.jsx";
 import SuccessResetPassword from "./Pages/Auth/SuccessResetPassword.jsx";
 import Projects from "./Pages/Projects.jsx";
+import EmployeeProfile from "./Pages/EmployeeProfile.jsx";
 import Clients from "./Pages/Clients.jsx";
-import Employees from "./Pages/Auth/Employees.jsx";
+import Employees from "./Pages/Employees.jsx";
 import Statistics from "./Pages/Statistics.jsx";
 import MainNavigation from "./components/MainNavigation.jsx";
 import ProjectNav from "./components/ProjectNav.jsx";
 import ProjectDetailsInfo from "./Pages/ProjectDetails.jsx";
 import { tokenLoader, checkAuthLoader } from "./util/auth.js";
-import Info from "./Pages/Info.jsx";
 import Files from "./Pages/Files.jsx";
 import Tasks from "./Pages/Tasks.jsx";
-import { projectsIndex ,projectDetailsLoader, clientsIndex} from "./http.js";
+import {
+  projectsIndex,
+  projectDetailsLoader,
+  clientsIndex,
+  employeesIndex,
+  employeeDetailsLoader,
+} from "./http.js";
 /*
 function to declare the routers:createBrowserRouter
 path:with route active
@@ -100,14 +106,34 @@ const router = createBrowserRouter([
             loader: projectDetailsLoader,
             children: [
               { path: "info", element: <ProjectDetailsInfo /> },
-              {path: "tasks", element:<Tasks/>},
-              {path:"files", element:<Files/>}
+              { path: "tasks", element: <Tasks /> },
+              { path: "files", element: <Files /> },
             ],
           },
         ],
       },
-      { path: "clients", element: <Clients />, id:"clients", loader:clientsIndex },
-      { path: "employees", element: <Employees /> },
+      {
+        path: "employees",
+        id: "employees",
+        loader: employeesIndex,
+        children: [
+          { path: "", element: <Employees /> },
+
+          {
+            path: ":employeeId",
+            element: <EmployeeProfile />,
+            id: "employeeProfile",
+            loader: employeeDetailsLoader,
+          },
+        ],
+      },
+      {
+        path: "clients",
+        element: <Clients />,
+        id: "clients",
+        loader: clientsIndex,
+      },
+      
       {
         path: "logout",
         element: <Logout />,

@@ -7,6 +7,6 @@ export default function CardButton ({onClick,label,Icon,color}){
         >
         {label}
         {Icon && <Icon />}
-        
+
       </button>);
 }

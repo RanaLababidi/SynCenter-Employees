@@ -73,7 +73,7 @@ const Clients = () => {
     if (file != null) {
       formData.append("image", file);
     }
-
+   
     try {
       const response = await storeClient(formData);
       setShowModal(false);
@@ -180,15 +180,7 @@ const Clients = () => {
                     >
                       <ModeEditOutlineSharpIcon />
                     </button>
-                    <button
-                      className="text-inherit hover:text-redcolor transition-colors duration-300"
-                      onClick={() => {
-                        setSelectedClientId(clients.id);
-                        setShowConfirm(true);
-                      }}
-                    >
-                      <DeleteOutlineSharpIcon />
-                    </button>
+               
                   </td>
                 </tr>
               ))}

@@ -18,24 +18,24 @@ const Model = ({ title, onClose, onSave, children, labelButton }) => {
          bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
         >
           <form onSubmit={onSave}>
-          <div className="flex justify-between items-center">
-            <h3 className="font-title font-bold text-black" id="modal-title">
-              {title}
-            </h3>
+            <div className="flex justify-between items-center">
+              <h3 className="font-title font-bold text-black" id="modal-title">
+                {title}
+              </h3>
 
-            <div className="inline">
-              <Tooltip title="Reset">
-                <button type="reset">
-                  <ReplayIcon />
+              <div className="inline">
+                <Tooltip title="Reset">
+                  <button type="reset">
+                    <ReplayIcon />
+                  </button>
+                </Tooltip>
+
+                <button type="button" onClick={onClose}>
+                  <CloseIcon className="text-background" />
                 </button>
-              </Tooltip>
-
-              <button type="button" onClick={onClose}>
-                <CloseIcon className="text-background" />
-              </button>
+              </div>
             </div>
-          </div>
-          
+
             <div className="max-h-96 overflow-y-auto">{children}</div>
 
             <div className="flex justify-between items-center">

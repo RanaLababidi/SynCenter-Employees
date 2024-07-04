@@ -29,7 +29,6 @@ function ProjectDetailsInfo() {
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [file, setFile] = useState();
-
   const [name, setName] = useState(data.name);
   const [description, setDescription] = useState(data.description);
   const [selectedClientId, setSelectedClientId] = useState(data.client.id);

@@ -7,7 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import Title from "../components/Title";
-import Model from "../Pages/Model"
+import Model from "../Pages/Model";
 import ButtonComponent from "../components/ButtonComponent";
 import Menu from "../components/Menu";
 import Success from "../components/Success";
@@ -18,7 +18,7 @@ import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import successGif from "../assets/Animation - 1716113873825 (1).gif";
 import deleteGif from "../assets/delete.gif";
-import {  storeProject } from "../http";
+import { storeProject } from "../http";
 import Avatar from "../components/Avatar";
 
 function Projects() {
@@ -32,7 +32,6 @@ function Projects() {
   const [description, setDescription] = useState("");
   const [selectedClientId, setSelectedClientId] = useState(null);
 
-
   const handleOpen = () => {
     setShowModal(true);
   };
@@ -45,20 +44,19 @@ function Projects() {
     setSuccessMessage(false);
     window.location.reload();
   };
- 
+
   const handleSave = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
     formData.append("client_id", selectedClientId);
-    formData.append("logo", file);  
+    formData.append("logo", file);
     try {
       const response = await storeProject(formData);
       setShowModal(false);
       setSuccessMessage(true);
       window.location.reload();
-
     } catch (error) {
       console.error("Error adding project:", error);
     }
@@ -89,7 +87,15 @@ function Projects() {
                 <img className="w-full h-56 object-cover " src={project.logo} />
                 <div className="  ">
                   <h5 className="text-xl font-bold mb-2 mt">{project.name}</h5>
-               
+                  <div className="flex items-center ">
+                    <Avatar src={project.client.logo} />
+                    <div className="pl-2">
+                      <p className="text-xl">{project.client.name}</p>
+                      <div className="text-shade text-xs">
+                        {formatDate(project.created_at)}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Link>
             </div>
@@ -121,7 +127,12 @@ function Projects() {
       )}
 
       {showModal && (
-        <Model title="New Project" onClose={handleClose} onSave={handleSave} labelButton={"Add new project"}>
+        <Model
+          title="New Project"
+          onClose={handleClose}
+          onSave={handleSave}
+          labelButton={"Add new project"}
+        >
           <FormModelRequired
             label="project name:"
             id="name"
