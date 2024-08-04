@@ -35,6 +35,7 @@ import {
   clientsIndex,
   employeesIndex,
   employeeDetailsLoader,
+  TasksLoade,
 } from "./http.js";
 /*
 function to declare the routers:createBrowserRouter
@@ -106,7 +107,7 @@ const router = createBrowserRouter([
             loader: projectDetailsLoader,
             children: [
               { path: "info", element: <ProjectDetailsInfo /> },
-              { path: "tasks", element: <Tasks /> },
+              { path: "tasks",id:"tasks", element: <Tasks />,loader:TasksLoade },
               { path: "files", element: <Files /> },
             ],
           },
@@ -118,7 +119,6 @@ const router = createBrowserRouter([
         loader: employeesIndex,
         children: [
           { path: "", element: <Employees /> },
-
           {
             path: ":employeeId",
             element: <EmployeeProfile />,
@@ -133,7 +133,6 @@ const router = createBrowserRouter([
         id: "clients",
         loader: clientsIndex,
       },
-      
       {
         path: "logout",
         element: <Logout />,

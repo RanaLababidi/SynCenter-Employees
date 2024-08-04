@@ -72,7 +72,6 @@ function Employees() {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("phone", phone);
-
     formData.append("password", password);
     formData.append("password_confirmation", password_confirmation);
     if (file != null) {

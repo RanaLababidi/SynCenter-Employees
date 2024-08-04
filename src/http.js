@@ -222,3 +222,62 @@ export async function deleteEmployee(id) {
   const responseData = await response.json();
   return responseData;
 }
+
+export async function employeeLoade ()  {
+  
+    const token = localStorage.getItem("token");
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await fetch(`${baseUrl}/company/employees`, { headers });
+
+    if (!response.ok) {
+      throw new Error("Could not fetch clients.");
+    }
+
+    const responseData = await response.json();
+    return responseData.employees;
+  };
+
+
+//Tasks
+export async function storeTask(formData) {
+  const token = localStorage.getItem("token");
+  const headers = {
+      Authorization: `Bearer ${token}`,
+      // Content-Type should be omitted for FormData
+  };
+
+  const response = await fetch(`${baseUrl}/company/tasks`, {
+      method: "POST",
+      headers: headers,
+      body: formData,
+  });
+
+  if (!response.ok) {
+      throw new Error("Could not fetch projects.");
+  }
+  
+  const responseData = await response.json();
+  return responseData;
+}
+export async function TasksLoade ()  {
+  
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await fetch(`${baseUrl}/company/tasks`, { headers });
+
+  if (!response.ok) {
+    throw new Error("Could not fetch clients.");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+};
+
