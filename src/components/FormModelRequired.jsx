@@ -21,7 +21,7 @@ export default function FormModelRequired({length, label, id, type,value,onChang
           onBlur={onBlur}
           defaultValue={defaultValue} 
           minLength={length}
-          className="form-input mt-1 block w-full border border-background rounded-lg py-1.5 shadow-sm focus:ring-2 focus:ring-inset focus:ring-pistach sm:text-sm sm:leading-6"
+          className=" text-black form-input mt-1 block w-full border border-background rounded-lg py-1.5 shadow-sm focus:ring-2 focus:ring-inset focus:ring-pistach sm:text-sm sm:leading-6"
         />
       </div>
     </div>

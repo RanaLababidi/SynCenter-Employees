@@ -37,7 +37,7 @@ export default function AuthForm() {
             )}
           </div>
           <h3 className="font-title text-center mt-4 text-white">
-            Sign in and start managing your company
+            Sign in and start managing your work
           </h3>
         </div>
 

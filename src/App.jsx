@@ -6,36 +6,38 @@ import {
 } from "react-router-dom";
 //pages
 import Home from "./Pages/Home.jsx";
-import Login, { Action as loginAction } from "./Pages/Auth/Login.jsx";
+import Login  from "./Pages/Auth/Login.jsx";
 import Logout from "./Pages/Auth/Logout.jsx";
-import ForgetPassword, {
-  Action as forgotPasswordAction,
-} from "./Pages/Auth/ForgetPassword.jsx";
-import CheckCode, {
-  Action as checkCodeAction,
-} from "./Pages/Auth/CheckCode.jsx";
-import ResetPassword, {
-  Action as resetPasswordAction,
-} from "./Pages/Auth/ResetPassword.jsx";
+import ForgetPassword from "./Pages/Auth/ForgetPassword.jsx";
+import CheckCode from "./Pages/Auth/CheckCode.jsx";
+import ResetPassword from "./Pages/Auth/ResetPassword.jsx";
 import SuccessResetPassword from "./Pages/Auth/SuccessResetPassword.jsx";
 import Projects from "./Pages/Projects.jsx";
 import EmployeeProfile from "./Pages/EmployeeProfile.jsx";
 import Clients from "./Pages/Clients.jsx";
 import Employees from "./Pages/Employees.jsx";
 import Statistics from "./Pages/Statistics.jsx";
+import TasksDetails from "./Pages/TasksDetails.jsx";
 import MainNavigation from "./components/MainNavigation.jsx";
 import ProjectNav from "./components/ProjectNav.jsx";
 import ProjectDetailsInfo from "./Pages/ProjectDetails.jsx";
-import { tokenLoader, checkAuthLoader } from "./util/auth.js";
+import { checkAuthLoader } from "./util/auth.js";
 import Files from "./Pages/Files.jsx";
 import Tasks from "./Pages/Tasks.jsx";
+import Profile from "./Pages/Profile.jsx";
 import {
+  loginAction,
+  forgotPasswordAction,
+  checkCodeAction,
+  resetPasswordAction,
   projectsIndex,
   projectDetailsLoader,
-  clientsIndex,
-  employeesIndex,
-  employeeDetailsLoader,
+  statisticsLoader,
   TasksLoade,
+  tasksDetailsLoader,
+  fileLoade,
+  profileLoader,
+  
 } from "./http.js";
 /*
 function to declare the routers:createBrowserRouter
@@ -93,7 +95,8 @@ const router = createBrowserRouter([
     id: "root",
     loader: checkAuthLoader,
     children: [
-      { path: "statistics", element: <Statistics /> },
+      { path: "statistics",id:"statistics", element: <Statistics />,loader:statisticsLoader
+      },
       {
         path: "projects",
         id: "projects",
@@ -107,31 +110,36 @@ const router = createBrowserRouter([
             loader: projectDetailsLoader,
             children: [
               { path: "info", element: <ProjectDetailsInfo /> },
-              { path: "tasks",id:"tasks", element: <Tasks />,loader:TasksLoade },
-              { path: "files", element: <Files /> },
+              {
+                path: "tasks",
+                id: "tasks",
+                loader: TasksLoade,
+                children: [
+                  { path: "", element: <Tasks /> },
+                  {
+                    path: ":taskId",
+                    id: "taskDetails",
+                    element: <TasksDetails />,
+                    loader: tasksDetailsLoader,
+                  },
+                ],
+              },
+              {
+                path: "files",
+                element: <Files />,
+                id: "files",
+                loader: fileLoade,
+              },
             ],
           },
         ],
       },
+     
       {
-        path: "employees",
-        id: "employees",
-        loader: employeesIndex,
-        children: [
-          { path: "", element: <Employees /> },
-          {
-            path: ":employeeId",
-            element: <EmployeeProfile />,
-            id: "employeeProfile",
-            loader: employeeDetailsLoader,
-          },
-        ],
-      },
-      {
-        path: "clients",
-        element: <Clients />,
-        id: "clients",
-        loader: clientsIndex,
+        path: "profile",
+        element: <Profile />,
+        id: "profile",
+        loader: profileLoader,
       },
       {
         path: "logout",

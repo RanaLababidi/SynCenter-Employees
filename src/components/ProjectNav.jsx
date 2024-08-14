@@ -21,7 +21,7 @@ export default function Tabs() {
               onClick={() => handleTabClick("info")}
             >
               <EditNoteSharpIcon/>
-              Inof
+              Info
             
             </button>
           </Link>

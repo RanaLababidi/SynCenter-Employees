@@ -18,6 +18,7 @@ import AutoGraphOutlinedIcon from "@mui/icons-material/AutoGraphOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
 import WorkOutlineSharpIcon from "@mui/icons-material/WorkOutlineSharp";
 import SwitchAccountOutlinedIcon from "@mui/icons-material/SwitchAccountOutlined";
+import AssignmentIndSharpIcon from '@mui/icons-material/AssignmentIndSharp';
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import logo from "../assets/Synclogo1.png";
 const drawerWidth = 200;
@@ -131,7 +132,7 @@ export default function MainNavigation() {
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
-              <ChevronLeftIcon className="w-10 h-10 text-lightgray transition duration-500 ease-in-out transform hover:scale-150 hover:text-white" />
+              <ChevronLeftIcon className="w-10 h-10  transition duration-500 ease-in-out transform hover:scale-150 text-white" />
             )}
           </IconButton>
           <Divider />
@@ -140,7 +141,7 @@ export default function MainNavigation() {
         <List className="bg-background h-screen">
           {token && (
             <nav className="pl-6 h-full ">
-              <ul className="flex flex-col h-full space-y-20">
+              <ul className="flex flex-col h-full space-y-28">
                 <li className="">
                   <NavLink
                     to="statistics"
@@ -157,19 +158,11 @@ export default function MainNavigation() {
                 </li>
                 <li className="">
                   <NavLink
-                    to="Employees"
-                    Icon={EngineeringOutlinedIcon}
+                    to="profile"
+                    Icon={AssignmentIndSharpIcon}
                     open={open}
                   />
                 </li>
-                <li className="">
-                  <NavLink
-                    to="clients"
-                    Icon={SwitchAccountOutlinedIcon}
-                    open={open}
-                  />
-                </li>
-
                 <li>
                   <Logout Icon={LogoutSharpIcon} open={open} />
                 </li>
