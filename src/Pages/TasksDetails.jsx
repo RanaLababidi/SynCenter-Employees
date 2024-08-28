@@ -68,7 +68,6 @@ export default function TaskDetails() {
         <div className="flex">
           <TaskInfo Icon={SupervisedUserCircleIcon} title="Assignees :" />
           <div className="flex items-center">
-            <p className="mr-4">Assignees:</p>
             {task.employees.map((employee) => (
               <img
                 key={employee.id}

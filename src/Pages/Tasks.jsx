@@ -28,9 +28,7 @@ export default function Tasks() {
     <div className="">
       <div className="flex justify-between items-center">
         <Title title="All tasks for this project :" />
-        <div className="inline">
-          <ButtonComponent label="Add new Task" onClick={handleOpen} />
-        </div>
+      
       </div>
       <DragDrop initialColumns={tasksData} />
       <div className="text-white font-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>

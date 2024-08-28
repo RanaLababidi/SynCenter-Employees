@@ -10,12 +10,7 @@ import TasksChart from "../components/TasksChart";
 
 export default function Statistics() {
   const data = useRouteLoaderData("statistics");
-// "projects_count": 6,
-//         "tasks_count": 26,
-//         "todo_tasks_count": 14,
-//         "doing_tasks_count": 3,
-//         "tocheck_tasks_count": 8,
-//         "done_tasks_count": 1
+
   return (
     <div className="">
       <div className="flex justify-between items-center">

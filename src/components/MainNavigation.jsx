@@ -110,7 +110,7 @@ export default function MainNavigation() {
       <CssBaseline />
 
       <AppBar position="fixed" open={open}>
-        <Toolbar className="bg-gray">
+        <Toolbar className="bg-background">
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -122,7 +122,7 @@ export default function MainNavigation() {
           >
             <ChevronRightIcon className="w-10 h-10 text-lightgray transition duration-500 ease-in-out transform hover:scale-150  hover:text-white" />
           </IconButton>
-          <div variant="h6">search bar here</div>
+          
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

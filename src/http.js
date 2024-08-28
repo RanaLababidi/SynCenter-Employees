@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.1.3:8000";
+const baseUrl = "http://192.168.166.36:8000";
 import {
   Form,
   useNavigate,
@@ -25,7 +25,7 @@ export async function loginAction({ request, params }) {
     password: data.get("password"),
   };
 
-  const response = await fetch("http://127.0.0.1:8000/employee/login", {
+  const response = await fetch(`${baseUrl}/employee/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
